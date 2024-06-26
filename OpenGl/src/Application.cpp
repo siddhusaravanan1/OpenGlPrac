@@ -45,6 +45,9 @@ std::string fragmentShader =
 "struct Material {\n"
 "   sampler2D texture_diffuse1;\n"
 "   sampler2D texture_specular1;\n"
+"   sampler2D texture_normal1;\n"
+"   sampler2D texture_ao1;\n"
+"   sampler2D texture_roughness1;\n"
 "   float Shininess;\n"
 "};\n"
 
@@ -101,14 +104,17 @@ std::string fragmentShader =
 "   vec3 viewDir = normalize(cameraPos - fragPos);\n"
 "   vec3 norm = normalize(normal);\n"
 
-"   //vec3 result = calcDirLight(dirLight, norm, viewDir);\n"
+"   vec3 result = calcDirLight(dirLight, norm, viewDir);\n"
 "   //result += calcPointLight(pointLight, norm, viewDir, fragPos);\n"
-"   vec3 result = calcSpotLight(spotLight, norm, viewDir, fragPos);\n"
+"   result += calcSpotLight(spotLight, norm, viewDir, fragPos);\n"
 "   FragColor = vec4(result, 1.0f);\n"
 "}\n"
 
 "vec3 calcDirLight(DirLight light, vec3 normal, vec3 viewDir)\n"
 "{\n"
+"   vec3 normMap = texture(material.texture_normal1, texCoord).rgb;\n"
+"   vec3 aoMap = texture(material.texture_ao1, texCoord).rgb;\n"
+"   vec3 roughMap = texture(material.texture_roughness1, texCoord).rgb;\n"
 "   vec3 ambient = light.ambient * texture(material.texture_diffuse1, texCoord).rgb;\n"
 
 "   vec3 lightDir = normalize(-light.direction);\n"
@@ -119,10 +125,26 @@ std::string fragmentShader =
 "   float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.Shininess);\n"
 "   vec3 specular = light.specular * spec * texture(material.texture_specular1, texCoord).rgb;\n"
 
+"   ambient *= normMap;\n"
+"   diffuse *= normMap;\n"
+"   specular *= normMap;\n"
+
+"   ambient *= aoMap;\n"
+"   diffuse *= aoMap;\n"
+"   specular *= aoMap;\n"
+
+"   ambient *= roughMap;\n"
+"   diffuse *= roughMap;\n"
+"   specular *= roughMap;\n"
+
 "   return (ambient + diffuse + specular);\n"
 "}\n"
 "vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPos)\n"
 "{\n"
+"   vec3 normMap = texture(material.texture_normal1, texCoord).rgb;\n"
+"   vec3 aoMap = texture(material.texture_ao1, texCoord).rgb;\n"
+"   vec3 roughMap = texture(material.texture_roughness1, texCoord).rgb;\n"
+
 "   vec3 ambient = light.ambient * texture(material.texture_diffuse1, texCoord).rgb;\n"
 
 "   vec3 lightDir = normalize(light.position - fragPos);\n"
@@ -140,10 +162,26 @@ std::string fragmentShader =
 "   diffuse *= attenuation;\n"
 "   specular *= attenuation;\n"
 
+"   ambient *= normMap;\n"
+"   diffuse *= normMap;\n"
+"   specular *= normMap;\n"
+
+"   ambient *= aoMap;\n"
+"   diffuse *= aoMap;\n"
+"   specular *= aoMap;\n"
+
+"   ambient *= roughMap;\n"
+"   diffuse *= roughMap;\n"
+"   specular *= roughMap;\n"
+
 "   return (ambient + diffuse + specular);\n"
 "}\n"
 "vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 viewDir, vec3 fragPos)\n"
 "{\n"
+"   vec3 normMap = texture(material.texture_normal1, texCoord).rgb;\n"
+"   vec3 aoMap = texture(material.texture_ao1, texCoord).rgb;\n"
+"   vec3 roughMap = texture(material.texture_roughness1, texCoord).rgb;\n"
+
 "   vec3 lightDir = normalize(light.position - fragPos);\n"
 "   float theta = dot(lightDir, normalize(-light.direction));\n"
 "   float epsilon = (light.inCutOff - light.outCutOff);\n"
@@ -166,6 +204,18 @@ std::string fragmentShader =
 "   ambient *= attenuation;\n"
 "   diffuse *= attenuation;\n"
 "   specular *= attenuation;\n"
+
+"   ambient *= normMap;\n"
+"   diffuse *= normMap;\n"
+"   specular *= normMap;\n"
+
+"   ambient *= aoMap;\n"
+"   diffuse *= aoMap;\n"
+"   specular *= aoMap;\n"
+
+"   ambient *= roughMap;\n"
+"   diffuse *= roughMap;\n"
+"   specular *= roughMap;\n"
 "   return(ambient + diffuse + specular);\n"
 "}\n"
 ;
@@ -233,7 +283,7 @@ int main(void)
     stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
     Shader boxShader(vertexShader, fragmentShader);
-    Model ourModel("C:/Users/siddh/Documents/OpenGL/OpenGl/resource/Model/backpack.obj");
+    Model ourModel("C:/Users/ss/Documents/OpenGL/Basics-Opengl/OpenGlPrac/resource/Model/backpack.obj");
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -250,8 +300,8 @@ int main(void)
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), 640.0f / 480.0f, 0.1f, 100.0f);
 
         glm::vec3 dirAmbient = glm::vec3(0.05f, 0.05f, 0.05f);
-        glm::vec3 dirDiffuse = glm::vec3(0.2f, 0.2f, 0.2f);
-        glm::vec3 dirSpecular = glm::vec3(0.5f, 0.5f, 0.5f);
+        glm::vec3 dirDiffuse = glm::vec3(0.5f);
+        glm::vec3 dirSpecular = glm::vec3(0.7f);
 
         glm::vec3 pointAmbient = glm::vec3(0.1f, 0.1f, 0.1f);
         glm::vec3 pointDiffuse = glm::vec3(0.8f, 0.8f, 0.8f);

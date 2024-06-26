@@ -14,6 +14,9 @@ void Mesh::Draw(Shader& shader)
 {
 	unsigned int numDiffuse = 1;
 	unsigned int numSpecular = 1;
+	unsigned int numNormal = 1;
+	unsigned int numAO = 1;
+	unsigned int numRoughness = 1;
 
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
@@ -26,6 +29,12 @@ void Mesh::Draw(Shader& shader)
 			number = to_string(numDiffuse++);
 		else if (name == "texture_specular")
 			number = to_string(numSpecular++);
+		else if (name == "texture_normal")
+			number = to_string(numNormal++);
+		else if (name == "texture_ao")
+			number = to_string(numAO++);
+		else if (name == "texture_roughness")
+			number = to_string(numRoughness++);
 		
 		shader.SetUniformInt(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);

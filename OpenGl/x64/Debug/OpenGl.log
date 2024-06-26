@@ -1,2 +1,21 @@
 ﻿  Application.cpp
-C:\Users\siddh\Documents\OpenGL\OpenGl\OpenGl\src\Application.cpp(1,10): error C1083: Cannot open include file: 'GLFW/glfw3.h': No such file or directory
+  Mesh.cpp
+  Model.cpp
+C:\Users\ss\Documents\OpenGL\Basics-Opengl\OpenGlPrac\OpenGl\src\Mesh.cpp(34,43): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Shader.cpp
+  stb_image.cpp
+  Generating Code...
+glew32sd.lib(glew.obj) : warning LNK4099: PDB '' was not found with 'glew32sd.lib(glew.obj)' or at ''; linking object as if no debug info
+Application.obj : error LNK2019: unresolved external symbol __imp_glClear referenced in function main
+Application.obj : error LNK2019: unresolved external symbol __imp_glClearColor referenced in function main
+Application.obj : error LNK2019: unresolved external symbol __imp_glEnable referenced in function main
+Mesh.obj : error LNK2019: unresolved external symbol __imp_glBindTexture referenced in function "public: void __cdecl Mesh::Draw(class Shader &)" (?Draw@Mesh@@QEAAXAEAVShader@@@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp_glBindTexture
+Mesh.obj : error LNK2019: unresolved external symbol __imp_glDrawElements referenced in function "public: void __cdecl Mesh::Draw(class Shader &)" (?Draw@Mesh@@QEAAXAEAVShader@@@Z)
+Model.obj : error LNK2019: unresolved external symbol __imp_glGenTextures referenced in function "private: unsigned int __cdecl Model::TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,bool)" (?TextureFromFile@Model@@AEAAIPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+Model.obj : error LNK2019: unresolved external symbol __imp_glTexImage2D referenced in function "private: unsigned int __cdecl Model::TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,bool)" (?TextureFromFile@Model@@AEAAIPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+Model.obj : error LNK2019: unresolved external symbol __imp_glTexParameteri referenced in function "private: unsigned int __cdecl Model::TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,bool)" (?TextureFromFile@Model@@AEAAIPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+glew32sd.lib(glew.obj) : error LNK2019: unresolved external symbol __imp_glGetString referenced in function glewGetExtension
+glew32sd.lib(glew.obj) : error LNK2019: unresolved external symbol __imp_wglGetCurrentDC referenced in function wglewGetExtension
+glew32sd.lib(glew.obj) : error LNK2019: unresolved external symbol __imp_wglGetProcAddress referenced in function _glewInit_GL_VERSION_1_2
+C:\Users\ss\Documents\OpenGL\Basics-Opengl\OpenGlPrac\x64\Debug\OpenGl.exe : fatal error LNK1120: 11 unresolved externals

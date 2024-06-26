@@ -119,6 +119,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     // 4. height maps
     std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+    //rough maps
+    std::vector<Texture> aoMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ao");
+    textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
+    //
+    std::vector<Texture> roughMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_roughness");
+    textures.insert(textures.end(), roughMaps.begin(), roughMaps.end());
 
     // return a mesh object created from the extracted mesh data
     return Mesh(vertices, indices, textures);
