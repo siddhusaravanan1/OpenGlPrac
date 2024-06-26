@@ -281,7 +281,10 @@ int main(void)
         std::cout << "Error" << std::endl;
     }
     stbi_set_flip_vertically_on_load(true);
+    //depth test
     glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LESS);
     Shader boxShader(vertexShader, fragmentShader);
     Model ourModel("C:/Users/ss/Documents/OpenGL/Basics-Opengl/OpenGlPrac/resource/Model/backpack.obj");
 
@@ -299,9 +302,9 @@ int main(void)
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), 640.0f / 480.0f, 0.1f, 100.0f);
 
-        glm::vec3 dirAmbient = glm::vec3(0.05f, 0.05f, 0.05f);
-        glm::vec3 dirDiffuse = glm::vec3(0.5f);
-        glm::vec3 dirSpecular = glm::vec3(0.7f);
+        glm::vec3 dirAmbient = glm::vec3(0.1f);
+        glm::vec3 dirDiffuse = glm::vec3(0.8f);
+        glm::vec3 dirSpecular = glm::vec3(1.0f);
 
         glm::vec3 pointAmbient = glm::vec3(0.1f, 0.1f, 0.1f);
         glm::vec3 pointDiffuse = glm::vec3(0.8f, 0.8f, 0.8f);
